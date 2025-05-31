@@ -47,7 +47,6 @@
             cursor: pointer;
         }
 
-        /* เพิ่ม animation สำหรับ notification */
         .animate-fade-in-out {
             animation: fadeInOut 2s ease-in-out forwards;
         }
@@ -57,6 +56,32 @@
             10% { opacity: 1; transform: translateY(0) translateX(-50%); }
             90% { opacity: 1; transform: translateY(0) translateX(-50%); }
             100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+        }
+
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .now-playing-bar {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+            .now-playing-info {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .now-playing-controls {
+                width: 100%;
+            }
+            .volume-control {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -72,7 +97,7 @@
                     <div class="radio-wave w-1 h-6 bg-cyan-400 rounded-full"></div>
                 </div>
                 <h1 class="text-2xl font-bold">
-                    MUSIC<span class="text-pink-500">WAVE</span>
+                    MUSIC<span class="text-pink-500">WAVE V2</span>
                     <span class="text-sm font-normal text-gray-500 ml-2">BY WUTTHICHAI</span>
                 </h1>
             </div>
@@ -83,8 +108,7 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8 pb-24">
-        <!-- Hero Section -->
-        <section class="mb-12 relative overflow-hidden rounded-2xl">
+ <section class="mb-12 relative overflow-hidden rounded-2xl">
             <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
             <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                 alt="Music Festival" class="w-full h-96 object-cover">
@@ -103,76 +127,76 @@
                 <h3 class="text-2xl font-bold">Recently Played</h3>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <!-- Song 1 -->
+                <!-- เพลงที่ 1 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="summer-vibes">
+                        <img src="https://i.ytimg.com/vi/Go9TUOf0uOU/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="kob-khun">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Summer Vibes</h4>
-                    <p class="text-sm text-gray-400 truncate">The Beach Boys</p>
+                    <h4 class="font-semibold truncate">เกินกว่ารัก</h4>
+                    <p class="text-sm text-gray-400 truncate">แคลช</p>
                 </div>
 
-                <!-- Song 2 -->
+                <!-- เพลงที่ 2 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="dancing-queen">
+                        <img src="https://i.ytimg.com/vi/jxl0dYgazMo/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="jai-ngai">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Dancing Queen</h4>
-                    <p class="text-sm text-gray-400 truncate">ABBA</p>
+                    <h4 class="font-semibold truncate">ใจง่าย</h4>
+                    <p class="text-sm text-gray-400 truncate">ลาบานูน</p>
                 </div>
 
-                <!-- Song 3 -->
+                <!-- เพลงที่ 3 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="bohemian-rhapsody">
+                        <img src="https://i.ytimg.com/vi/mSWNvFaYrXY/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="mai-tang-kan">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Bohemian Rhapsody</h4>
-                    <p class="text-sm text-gray-400 truncate">Queen</p>
+                    <h4 class="font-semibold truncate">ไม่ต่างกัน</h4>
+                    <p class="text-sm text-gray-400 truncate">เพลงประกอบภาพยนตร์</p>
                 </div>
 
-                <!-- Song 4 -->
+                <!-- เพลงที่ 4 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="billie-jean">
+                        <img src="https://i.ytimg.com/vi/fXw1PERFGMs/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="tee-neung-tee-koo-muang">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Billie Jean</h4>
-                    <p class="text-sm text-gray-400 truncate">Michael Jackson</p>
+                    <h4 class="font-semibold truncate">ตีหนึ่งที่คูเมือง</h4>
+                    <p class="text-sm text-gray-400 truncate">ILLSLICK</p>
                 </div>
 
-                <!-- Song 5 -->
+                <!-- เพลงที่ 5 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="hotel-california">
+                        <img src="https://i.ytimg.com/vi/2VjVEcfNSVk/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="tham-dai-piang">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Hotel California</h4>
-                    <p class="text-sm text-gray-400 truncate">Eagles</p>
+                    <h4 class="font-semibold truncate">ทำได้เพียง</h4>
+                    <p class="text-sm text-gray-400 truncate">25 hours</p>
                 </div>
 
-                <!-- Song 6 -->
+                <!-- เพลงที่ 6 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="sweet-child">
+                        <img src="https://i.ytimg.com/vi/wGFRGiG_TKM/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="ter-ter-puean-rao-chob">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold truncate">Sweet Child O' Mine</h4>
-                    <p class="text-sm text-gray-400 truncate">Guns N' Roses</p>
+                    <h4 class="font-semibold truncate">เธอ ๆ เพื่อนเราชอบ</h4>
+                    <p class="text-sm text-gray-400 truncate">SERIOUS BACON</p>
                 </div>
             </div>
         </section>
@@ -185,32 +209,32 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 <!-- Playlist 1 -->
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
-                    <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
-                    <h4 class="font-semibold">Rock Classics</h4>
+                    <img src="https://i.ytimg.com/vi/Go9TUOf0uOU/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Chill Vibes</h4>
                 </div>
 
                 <!-- Playlist 2 -->
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
-                    <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
-                    <h4 class="font-semibold">Pop Hits 2023</h4>
+                    <img src="https://i.ytimg.com/vi/jxl0dYgazMo/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">90s Nostalgia</h4>
                 </div>
 
                 <!-- Playlist 3 -->
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
-                    <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
-                    <h4 class="font-semibold">Chill Vibes</h4>
+                    <img src="https://i.ytimg.com/vi/mSWNvFaYrXY/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Miss You</h4>
                 </div>
 
                 <!-- Playlist 4 -->
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
-                    <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
-                    <h4 class="font-semibold">Workout Mix</h4>
+                    <img src="https://i.ytimg.com/vi/fXw1PERFGMs/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">LOVE LY</h4>
                 </div>
 
                 <!-- Playlist 5 -->
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
-                    <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
-                    <h4 class="font-semibold">90s Nostalgia</h4>
+                    <img src="https://i.ytimg.com/vi/2VjVEcfNSVk/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">90s hit</h4>
                 </div>
             </div>
         </section>
@@ -236,14 +260,14 @@
                         <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
                             <td class="py-3 px-4 text-gray-400">1</td>
                             <td class="py-3 px-4 font-medium flex items-center">
-                                <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
-                                <span>Summer Vibes</span>
+                                <img src="https://i.ytimg.com/vi/Go9TUOf0uOU/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>เกินกว่ารัก</span>
                             </td>
-                            <td class="py-3 px-4 text-gray-400">The Beach Boys</td>
-                            <td class="py-3 px-4 text-gray-400">Endless Summer</td>
+                            <td class="py-3 px-4 text-gray-400">แคลช</td>
+                            <td class="py-3 px-4 text-gray-400">Single</td>
                             <td class="py-3 px-4 text-gray-400">3:45</td>
                             <td class="py-3 px-4">
-                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="summer-vibes">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="kob-khun">
                                     <i class="fas fa-play"></i>
                                 </button>
                             </td>
@@ -253,14 +277,14 @@
                         <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
                             <td class="py-3 px-4 text-gray-400">2</td>
                             <td class="py-3 px-4 font-medium flex items-center">
-                                <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
-                                <span>Dancing Queen</span>
+                                <img src="https://i.ytimg.com/vi/jxl0dYgazMo/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>ใจง่าย</span>
                             </td>
-                            <td class="py-3 px-4 text-gray-400">ABBA</td>
-                            <td class="py-3 px-4 text-gray-400">Arrival</td>
+                            <td class="py-3 px-4 text-gray-400">ลาบานูน</td>
+                            <td class="py-3 px-4 text-gray-400">Single</td>
                             <td class="py-3 px-4 text-gray-400">3:50</td>
                             <td class="py-3 px-4">
-                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="dancing-queen">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="jai-ngai">
                                     <i class="fas fa-play"></i>
                                 </button>
                             </td>
@@ -270,14 +294,14 @@
                         <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
                             <td class="py-3 px-4 text-gray-400">3</td>
                             <td class="py-3 px-4 font-medium flex items-center">
-                                <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
-                                <span>Bohemian Rhapsody</span>
+                                <img src="https://i.ytimg.com/vi/mSWNvFaYrXY/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>ไม่ต่างกัน</span>
                             </td>
-                            <td class="py-3 px-4 text-gray-400">Queen</td>
-                            <td class="py-3 px-4 text-gray-400">A Night at the Opera</td>
-                            <td class="py-3 px-4 text-gray-400">5:55</td>
+                            <td class="py-3 px-4 text-gray-400">เพลงประกอบภาพยนตร์</td>
+                            <td class="py-3 px-4 text-gray-400">OST</td>
+                            <td class="py-3 px-4 text-gray-400">4:20</td>
                             <td class="py-3 px-4">
-                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="bohemian-rhapsody">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="mai-tang-kan">
                                     <i class="fas fa-play"></i>
                                 </button>
                             </td>
@@ -287,14 +311,14 @@
                         <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
                             <td class="py-3 px-4 text-gray-400">4</td>
                             <td class="py-3 px-4 font-medium flex items-center">
-                                <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
-                                <span>Billie Jean</span>
+                                <img src="https://i.ytimg.com/vi/fXw1PERFGMs/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>ตีหนึ่งที่คูเมือง</span>
                             </td>
-                            <td class="py-3 px-4 text-gray-400">Michael Jackson</td>
-                            <td class="py-3 px-4 text-gray-400">Thriller</td>
+                            <td class="py-3 px-4 text-gray-400">ILLSLICK</td>
+                            <td class="py-3 px-4 text-gray-400">Single</td>
                             <td class="py-3 px-4 text-gray-400">4:54</td>
                             <td class="py-3 px-4">
-                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="billie-jean">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="tee-neung-tee-koo-muang">
                                     <i class="fas fa-play"></i>
                                 </button>
                             </td>
@@ -304,14 +328,14 @@
                         <tr class="hover:bg-gray-700 transition cursor-pointer group">
                             <td class="py-3 px-4 text-gray-400">5</td>
                             <td class="py-3 px-4 font-medium flex items-center">
-                                <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
-                                <span>Hotel California</span>
+                                <img src="https://i.ytimg.com/vi/wGFRGiG_TKM/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>เธอ ๆ เพื่อนเราชอบ</span>
                             </td>
-                            <td class="py-3 px-4 text-gray-400">Eagles</td>
-                            <td class="py-3 px-4 text-gray-400">Hotel California</td>
-                            <td class="py-3 px-4 text-gray-400">6:30</td>
+                            <td class="py-3 px-4 text-gray-400">SERIOUS BACON</td>
+                            <td class="py-3 px-4 text-gray-400">Single</td>
+                            <td class="py-3 px-4 text-gray-400">3:30</td>
                             <td class="py-3 px-4">
-                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="hotel-california">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="ter-ter-puean-rao-chob">
                                     <i class="fas fa-play"></i>
                                 </button>
                             </td>
@@ -330,83 +354,86 @@
                 <!-- Album 1 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="summer-vibes">
+                        <img src="https://i.ytimg.com/vi/Go9TUOf0uOU/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="kob-khun">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Midnights</h4>
-                    <p class="text-sm text-gray-400">Taylor Swift</p>
+                    <h4 class="font-semibold truncate">เกินกว่ารัก</h4>
+                    <p class="text-sm text-gray-400 truncate">แคลช</p>
                 </div>
 
                 <!-- Album 2 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="dancing-queen">
+                        <img src="https://i.ytimg.com/vi/jxl0dYgazMo/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="jai-ngai">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Renaissance</h4>
-                    <p class="text-sm text-gray-400">Beyoncé</p>
+                    <h4 class="font-semibold truncate">ใจง่าย</h4>
+                    <p class="text-sm text-gray-400 truncate">ลาบานูน</p>
                 </div>
 
                 <!-- Album 3 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="bohemian-rhapsody">
+                        <img src="https://i.ytimg.com/vi/mSWNvFaYrXY/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="mai-tang-kan">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Harry's House</h4>
-                    <p class="text-sm text-gray-400">Harry Styles</p>
+                    <h4 class="font-semibold truncate">ไม่ต่างกัน</h4>
+                    <p class="text-sm text-gray-400 truncate">เพลงประกอบภาพยนตร์</p>
                 </div>
 
                 <!-- Album 4 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="billie-jean">
+                        <img src="https://i.ytimg.com/vi/fXw1PERFGMs/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="tee-neung-tee-koo-muang">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Special</h4>
-                    <p class="text-sm text-gray-400">Lizzo</p>
+                    <h4 class="font-semibold truncate">ตีหนึ่งที่คูเมือง</h4>
+                    <p class="text-sm text-gray-400 truncate">ILLSLICK</p>
                 </div>
 
                 <!-- Album 5 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="hotel-california">
+                        <img src="https://i.ytimg.com/vi/2VjVEcfNSVk/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="tham-dai-piang">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Dawn FM</h4>
-                    <p class="text-sm text-gray-400">The Weeknd</p>
+                    <h4 class="font-semibold truncate">ทำได้เพียง</h4>
+                    <p class="text-sm text-gray-400 truncate">25 hours</p>
                 </div>
 
                 <!-- Album 6 -->
                 <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
                     <div class="relative mb-3">
-                        <img src="https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
-                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="sweet-child">
+                        <img src="https://i.ytimg.com/vi/wGFRGiG_TKM/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="ter-ter-puean-rao-chob">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
-                    <h4 class="font-semibold">Un Verano Sin Ti</h4>
-                    <p class="text-sm text-gray-400">Bad Bunny</p>
+                    <h4 class="font-semibold truncate">เธอ ๆ เพื่อนเราชอบ</h4>
+                    <p class="text-sm text-gray-400 truncate">SERIOUS BACON</p>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Now Playing Bar (Fixed at bottom) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-90 backdrop-blur-lg border-t border-gray-700 z-50">
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-90 backdrop-blur-lg border-t border-gray-700 z-50 now-playing-bar">
+        <div class="loading-overlay">
+            <i class="fas fa-spinner fa-spin text-2xl text-pink-500"></i>
+        </div>
         <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center md:justify-between space-y-3 md:space-y-0">
-            <div class="flex items-center w-full md:w-1/4">
-                <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Now Playing" class="now-playing-img w-12 h-12 rounded-md mr-3">
+            <div class="flex items-center w-full md:w-1/4 now-playing-info">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Now Playing" class="now-playing-img w-12 h-12 rounded-md mr-3">
                 <div>
                     <h4 class="now-playing-title font-semibold text-sm">Select a song</h4>
                     <p class="now-playing-artist text-xs text-gray-400">Artist</p>
@@ -416,7 +443,7 @@
                 </button>
             </div>
 
-            <div class="w-2/4">
+            <div class="w-2/4 now-playing-controls">
                 <div class="flex justify-center items-center space-x-6">
                     <button class="shuffle-btn text-gray-300 hover:text-white text-xl">
                         <i class="fas fa-random"></i>
@@ -443,7 +470,7 @@
                 </div>
             </div>
 
-            <div class="w-1/4 flex justify-end items-center space-x-4">
+            <div class="w-1/4 flex justify-end items-center space-x-4 volume-control">
                 <button class="queue-btn text-gray-300 hover:text-white">
                     <i class="fas fa-list-ol"></i>
                 </button>
@@ -543,51 +570,50 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // ข้อมูลเพลงทั้งหมด
-        const songs = {
-            "summer-vibes": {
-                title: "Summer Vibes",
-                artist: "The Beach Boys",
-                videoId: "2A7V9x0Oaaw",
-                duration: "3:45",
-                cover: "https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg"
-            },
-            "dancing-queen": {
-                title: "Dancing Queen",
-                artist: "ABBA",
-                videoId: "xFrGuyw1V8s",
-                duration: "3:50",
-                cover: "https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg"
-            },
-            "bohemian-rhapsody": {
-                title: "Bohemian Rhapsody",
-                artist: "Queen",
-                videoId: "fJ9rUzIMcZQ",
-                duration: "5:55",
-                cover: "https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg"
-            },
-            "billie-jean": {
-                title: "Billie Jean",
-                artist: "Michael Jackson",
-                videoId: "Zi_XLOBDo_Y",
-                duration: "4:54",
-                cover: "https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg"
-            },
-            "hotel-california": {
-                title: "Hotel California",
-                artist: "Eagles",
-                videoId: "BciS5krYL80",
-                duration: "6:30",
-                cover: "https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg"
-            },
-            "sweet-child": {
-                title: "Sweet Child O' Mine",
-                artist: "Guns N' Roses",
-                videoId: "1w7OgIMMRc4",
-                duration: "5:56",
-                cover: "https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg"
-            }
-        };
-
+       const songs = {
+            "kob-khun": {
+            title: "เกินกว่ารัก",
+            artist: "แคลช",
+            videoId: "Go9TUOf0uOU",
+            duration: "3:45",
+            cover: "https://i.ytimg.com/vi/Go9TUOf0uOU/hqdefault.jpg"
+        },
+        "jai-ngai": {
+            title: "ใจง่าย",
+            artist: "ลาบานูน",
+            videoId: "jxl0dYgazMo",
+            duration: "3:50",
+            cover: "https://i.ytimg.com/vi/jxl0dYgazMo/hqdefault.jpg"
+        },
+        "mai-tang-kan": {
+            title: "ไม่ต่างกัน",
+            artist: "เพลงประกอบภาพยนตร์",
+            videoId: "mSWNvFaYrXY",
+            duration: "4:20",
+            cover: "https://i.ytimg.com/vi/mSWNvFaYrXY/hqdefault.jpg"
+        },
+        "tee-neung-tee-koo-muang": {
+            title: "ตีหนึ่งที่คูเมือง",
+            artist: "ILLSLICK",
+            videoId: "fXw1PERFGMs",
+            duration: "4:54",
+            cover: "https://i.ytimg.com/vi/fXw1PERFGMs/hqdefault.jpg"
+        },
+        "tham-dai-piang": {
+            title: "ทำได้เพียง",
+            artist: "25 hours",
+            videoId: "2VjVEcfNSVk",
+            duration: "3:30",
+            cover: "https://i.ytimg.com/vi/2VjVEcfNSVk/hqdefault.jpg"
+        },
+        "ter-ter-puean-rao-chob": {
+            title: "เธอ ๆ เพื่อนเราชอบ",
+            artist: "SERIOUS BACON",
+            videoId: "wGFRGiG_TKM",
+            duration: "3:30",
+            cover: "https://i.ytimg.com/vi/wGFRGiG_TKM/hqdefault.jpg"
+        }
+    };
         // YouTube Player
         let player;
         let currentSong = null;
