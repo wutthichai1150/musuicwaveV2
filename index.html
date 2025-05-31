@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicWave - Streaming Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .radio-wave {
+            animation: wave 3s infinite ease-in-out;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        .radio-wave:nth-child(2) { animation-delay: 0.2s; }
+        .radio-wave:nth-child(3) { animation-delay: 0.4s; }
+
+        .song-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-button {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .song-card:hover .play-button {
+            opacity: 1;
+        }
+
+        .progress-container {
+            cursor: pointer;
+        }
+
+        .volume-container {
+            cursor: pointer;
+        }
+
+        /* เพิ่ม animation สำหรับ notification */
+        .animate-fade-in-out {
+            animation: fadeInOut 2s ease-in-out forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px) translateX(-50%); }
+            10% { opacity: 1; transform: translateY(0) translateX(-50%); }
+            90% { opacity: 1; transform: translateY(0) translateX(-50%); }
+            100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-gray-900 to-gray-800 text-white min-h-screen">
+    <!-- Header Section -->
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="flex space-x-1">
+                    <div class="radio-wave w-1 h-6 bg-pink-500 rounded-full"></div>
+                    <div class="radio-wave w-1 h-6 bg-yellow-400 rounded-full"></div>
+                    <div class="radio-wave w-1 h-6 bg-cyan-400 rounded-full"></div>
+                </div>
+                <h1 class="text-2xl font-bold">
+                    MUSIC<span class="text-pink-500">WAVE</span>
+                    <span class="text-sm font-normal text-gray-500 ml-2">BY WUTTHICHAI</span>
+                </h1>
+            </div>
+            <div class="flex items-center space-x-6">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 pb-24">
+        <!-- Hero Section -->
+        <section class="mb-12 relative overflow-hidden rounded-2xl">
+            <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                alt="Music Festival" class="w-full h-96 object-cover">
+            <div class="absolute bottom-0 left-0 p-8 z-20">
+                <h2 class="text-4xl font-bold mb-2">เพลงฮิตประจำฤดูร้อน 2025</h2>
+                <p class="text-lg mb-4">เพลงฮิตสุดร้อนแรงสำหรับเพลย์ลิสต์หน้าร้อนของคุณ</p>
+                <button class="play-playlist bg-pink-600 hover:bg-pink-700 text-white px-8 py-3 rounded-full font-semibold flex items-center">
+                    <i class="fas fa-play mr-2"></i> Play Now
+                </button>
+            </div>
+        </section>
+
+        <!-- Recently Played -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Recently Played</h3>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Song 1 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="summer-vibes">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Summer Vibes</h4>
+                    <p class="text-sm text-gray-400 truncate">The Beach Boys</p>
+                </div>
+
+                <!-- Song 2 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="dancing-queen">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Dancing Queen</h4>
+                    <p class="text-sm text-gray-400 truncate">ABBA</p>
+                </div>
+
+                <!-- Song 3 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="bohemian-rhapsody">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Bohemian Rhapsody</h4>
+                    <p class="text-sm text-gray-400 truncate">Queen</p>
+                </div>
+
+                <!-- Song 4 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="billie-jean">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Billie Jean</h4>
+                    <p class="text-sm text-gray-400 truncate">Michael Jackson</p>
+                </div>
+
+                <!-- Song 5 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="hotel-california">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Hotel California</h4>
+                    <p class="text-sm text-gray-400 truncate">Eagles</p>
+                </div>
+
+                <!-- Song 6 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="sweet-child">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold truncate">Sweet Child O' Mine</h4>
+                    <p class="text-sm text-gray-400 truncate">Guns N' Roses</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Playlists -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">เพลย์ลิสต์ยอดนิยม</h3>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- Playlist 1 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
+                    <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Rock Classics</h4>
+                </div>
+
+                <!-- Playlist 2 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
+                    <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Pop Hits 2023</h4>
+                </div>
+
+                <!-- Playlist 3 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
+                    <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Chill Vibes</h4>
+                </div>
+
+                <!-- Playlist 4 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
+                    <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">Workout Mix</h4>
+                </div>
+
+                <!-- Playlist 5 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer hover:bg-gray-700">
+                    <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Playlist Cover" class="w-full rounded-md mb-3">
+                    <h4 class="font-semibold">90s Nostalgia</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Charts -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">อันดับสูงสุด</h3>
+            </div>
+            <div class="bg-gray-800 bg-opacity-50 rounded-xl overflow-hidden">
+                <table class="w-full">
+                    <thead class="border-b border-gray-700">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-gray-400 font-normal">#</th>
+                            <th class="py-3 px-4 text-left text-gray-400 font-normal">Title</th>
+                            <th class="py-3 px-4 text-left text-gray-400 font-normal">Artist</th>
+                            <th class="py-3 px-4 text-left text-gray-400 font-normal">Album</th>
+                            <th class="py-3 px-4 text-left text-gray-400 font-normal"><i class="far fa-clock"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Song 1 -->
+                        <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
+                            <td class="py-3 px-4 text-gray-400">1</td>
+                            <td class="py-3 px-4 font-medium flex items-center">
+                                <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>Summer Vibes</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-400">The Beach Boys</td>
+                            <td class="py-3 px-4 text-gray-400">Endless Summer</td>
+                            <td class="py-3 px-4 text-gray-400">3:45</td>
+                            <td class="py-3 px-4">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="summer-vibes">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Song 2 -->
+                        <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
+                            <td class="py-3 px-4 text-gray-400">2</td>
+                            <td class="py-3 px-4 font-medium flex items-center">
+                                <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>Dancing Queen</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-400">ABBA</td>
+                            <td class="py-3 px-4 text-gray-400">Arrival</td>
+                            <td class="py-3 px-4 text-gray-400">3:50</td>
+                            <td class="py-3 px-4">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="dancing-queen">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Song 3 -->
+                        <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
+                            <td class="py-3 px-4 text-gray-400">3</td>
+                            <td class="py-3 px-4 font-medium flex items-center">
+                                <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>Bohemian Rhapsody</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-400">Queen</td>
+                            <td class="py-3 px-4 text-gray-400">A Night at the Opera</td>
+                            <td class="py-3 px-4 text-gray-400">5:55</td>
+                            <td class="py-3 px-4">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="bohemian-rhapsody">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Song 4 -->
+                        <tr class="border-b border-gray-700 hover:bg-gray-700 transition cursor-pointer group">
+                            <td class="py-3 px-4 text-gray-400">4</td>
+                            <td class="py-3 px-4 font-medium flex items-center">
+                                <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>Billie Jean</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-400">Michael Jackson</td>
+                            <td class="py-3 px-4 text-gray-400">Thriller</td>
+                            <td class="py-3 px-4 text-gray-400">4:54</td>
+                            <td class="py-3 px-4">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="billie-jean">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Song 5 -->
+                        <tr class="hover:bg-gray-700 transition cursor-pointer group">
+                            <td class="py-3 px-4 text-gray-400">5</td>
+                            <td class="py-3 px-4 font-medium flex items-center">
+                                <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-10 h-10 rounded-md mr-3">
+                                <span>Hotel California</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-400">Eagles</td>
+                            <td class="py-3 px-4 text-gray-400">Hotel California</td>
+                            <td class="py-3 px-4 text-gray-400">6:30</td>
+                            <td class="py-3 px-4">
+                                <button class="play-btn opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition" data-song="hotel-california">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- New Releases -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">ล่าสุด</h3>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Album 1 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="summer-vibes">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Midnights</h4>
+                    <p class="text-sm text-gray-400">Taylor Swift</p>
+                </div>
+
+                <!-- Album 2 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="dancing-queen">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Renaissance</h4>
+                    <p class="text-sm text-gray-400">Beyoncé</p>
+                </div>
+
+                <!-- Album 3 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="bohemian-rhapsody">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Harry's House</h4>
+                    <p class="text-sm text-gray-400">Harry Styles</p>
+                </div>
+
+                <!-- Album 4 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="billie-jean">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Special</h4>
+                    <p class="text-sm text-gray-400">Lizzo</p>
+                </div>
+
+                <!-- Album 5 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="hotel-california">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Dawn FM</h4>
+                    <p class="text-sm text-gray-400">The Weeknd</p>
+                </div>
+
+                <!-- Album 6 -->
+                <div class="song-card bg-gray-800 bg-opacity-50 rounded-lg p-4 transition duration-300 cursor-pointer relative overflow-hidden group">
+                    <div class="relative mb-3">
+                        <img src="https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg" alt="Album Cover" class="w-full rounded-md">
+                        <button class="play-btn play-button absolute bottom-2 right-2 bg-pink-600 text-white p-3 rounded-full transform translate-y-2 group-hover:translate-y-0" data-song="sweet-child">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-semibold">Un Verano Sin Ti</h4>
+                    <p class="text-sm text-gray-400">Bad Bunny</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Now Playing Bar (Fixed at bottom) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-90 backdrop-blur-lg border-t border-gray-700 z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center md:justify-between space-y-3 md:space-y-0">
+            <div class="flex items-center w-full md:w-1/4">
+                <img src="https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg" alt="Now Playing" class="now-playing-img w-12 h-12 rounded-md mr-3">
+                <div>
+                    <h4 class="now-playing-title font-semibold text-sm">Select a song</h4>
+                    <p class="now-playing-artist text-xs text-gray-400">Artist</p>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-white">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+
+            <div class="w-2/4">
+                <div class="flex justify-center items-center space-x-6">
+                    <button class="shuffle-btn text-gray-300 hover:text-white text-xl">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button class="prev-btn text-gray-300 hover:text-white text-xl">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="play-pause-btn bg-pink-600 hover:bg-pink-700 text-white p-2 rounded-full shadow-lg">
+                        <i class="fas fa-play text-lg"></i>
+                    </button>
+                    <button class="next-btn text-gray-300 hover:text-white text-xl">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button class="repeat-btn text-gray-300 hover:text-white text-xl">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+                <div class="flex items-center mt-2">
+                    <span class="current-time text-xs text-gray-400 mr-2">0:00</span>
+                    <div class="progress-container w-full bg-gray-700 rounded-full h-1">
+                        <div class="progress-bar bg-pink-500 h-1 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <span class="duration text-xs text-gray-400 ml-2">0:00</span>
+                </div>
+            </div>
+
+            <div class="w-1/4 flex justify-end items-center space-x-4">
+                <button class="queue-btn text-gray-300 hover:text-white">
+                    <i class="fas fa-list-ol"></i>
+                </button>
+                <div class="flex items-center volume-container">
+                    <i class="fas fa-volume-up volume-icon text-gray-400 mr-2"></i>
+                    <div class="volume-slider w-24 bg-gray-700 rounded-full h-1">
+                        <div class="volume-progress bg-gray-400 h-1 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container mx-auto px-4 py-12 border-t border-gray-700">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Column 1 -->
+            <div>
+                <div class="flex items-center space-x-2 mb-4">
+                    <div class="flex space-x-1">
+                        <div class="radio-wave w-1 h-6 bg-pink-500 rounded-full"></div>
+                        <div class="radio-wave w-1 h-6 bg-yellow-400 rounded-full"></div>
+                        <div class="radio-wave w-1 h-6 bg-cyan-400 rounded-full"></div>
+                    </div>
+                    <h2 class="text-xl font-bold">MUSIC<span class="text-pink-500">WAVE</span></h2>
+                </div>
+                <p class="text-gray-400 mb-4">The best music streaming platform with millions of songs and podcasts.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">About Us</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Careers</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Press</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">News</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3 -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Communities</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">For Artists</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Developers</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Advertising</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Investors</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4 -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Useful Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Help</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Web Player</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Free Mobile App</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-pink-500 transition">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-sm text-gray-400 mb-4 md:mb-0">
+                &copy; 2023 MusicWave. All rights reserved.
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="text-sm text-gray-400 hover:text-pink-500 transition">Legal</a>
+                <a href="#" class="text-sm text-gray-400 hover:text-pink-500 transition">Privacy Center</a>
+                <a href="#" class="text-sm text-gray-400 hover:text-pink-500 transition">Privacy Policy</a>
+                <a href="#" class="text-sm text-gray-400 hover:text-pink-500 transition">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- YouTube Player -->
+    <div id="player" style="display: none;"></div>
+
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ข้อมูลเพลงทั้งหมด
+        const songs = {
+            "summer-vibes": {
+                title: "Summer Vibes",
+                artist: "The Beach Boys",
+                videoId: "2A7V9x0Oaaw",
+                duration: "3:45",
+                cover: "https://i.ytimg.com/vi/2A7V9x0Oaaw/hqdefault.jpg"
+            },
+            "dancing-queen": {
+                title: "Dancing Queen",
+                artist: "ABBA",
+                videoId: "xFrGuyw1V8s",
+                duration: "3:50",
+                cover: "https://i.ytimg.com/vi/xFrGuyw1V8s/hqdefault.jpg"
+            },
+            "bohemian-rhapsody": {
+                title: "Bohemian Rhapsody",
+                artist: "Queen",
+                videoId: "fJ9rUzIMcZQ",
+                duration: "5:55",
+                cover: "https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg"
+            },
+            "billie-jean": {
+                title: "Billie Jean",
+                artist: "Michael Jackson",
+                videoId: "Zi_XLOBDo_Y",
+                duration: "4:54",
+                cover: "https://i.ytimg.com/vi/Zi_XLOBDo_Y/hqdefault.jpg"
+            },
+            "hotel-california": {
+                title: "Hotel California",
+                artist: "Eagles",
+                videoId: "BciS5krYL80",
+                duration: "6:30",
+                cover: "https://i.ytimg.com/vi/BciS5krYL80/hqdefault.jpg"
+            },
+            "sweet-child": {
+                title: "Sweet Child O' Mine",
+                artist: "Guns N' Roses",
+                videoId: "1w7OgIMMRc4",
+                duration: "5:56",
+                cover: "https://i.ytimg.com/vi/1w7OgIMMRc4/hqdefault.jpg"
+            }
+        };
+
+        // YouTube Player
+        let player;
+        let currentSong = null;
+        let isPlaying = false;
+        let isShuffle = false;
+        let isRepeat = false;
+        let volume = 0.7;
+        let progressInterval;
+
+        // รายการเพลงทั้งหมดเรียงตามลำดับ
+        const songIds = Object.keys(songs);
+        let currentPlaylist = [...songIds]; // สร้างสำเนาสำหรับ playlist ปัจจุบัน
+        let currentSongIndex = -1;
+
+        // อัพเดท Now Playing Bar
+        function updateNowPlaying(songId) {
+            const song = songs[songId];
+            if (!song) return;
+
+            document.querySelector('.now-playing-img').src = song.cover;
+            document.querySelector('.now-playing-title').textContent = song.title;
+            document.querySelector('.now-playing-artist').textContent = song.artist;
+            document.querySelector('.duration').textContent = song.duration;
+            document.querySelector('.current-time').textContent = "0:00";
+            document.querySelector('.progress-bar').style.width = "0%";
+        }
+
+        // ฟังก์ชันสุ่มเพลง
+        function shufflePlaylist() {
+            currentPlaylist = [...songIds];
+            for (let i = currentPlaylist.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentPlaylist[i], currentPlaylist[j]] = [currentPlaylist[j], currentPlaylist[i]];
+            }
+        }
+
+        // ฟังก์ชันเล่นเพลง
+        function playSong(songId) {
+            if (!songs[songId]) return;
+
+            // หาลำดับเพลงปัจจุบัน
+            currentSongIndex = currentPlaylist.indexOf(songId);
+            
+            const song = songs[songId];
+            currentSong = songId;
+            
+            if (player) {
+                player.loadVideoById(song.videoId);
+            } else {
+                player = new YT.Player('player', {
+                    videoId: song.videoId,
+                    playerVars: {
+                        autoplay: 1,
+                        controls: 0,
+                        disablekb: 1,
+                        modestbranding: 1
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            
+            updateNowPlaying(songId);
+        }
+
+        // เมื่อ Player พร้อม
+        function onPlayerReady(event) {
+            event.target.setVolume(volume * 100);
+            event.target.playVideo();
+            isPlaying = true;
+            document.querySelector('.play-pause-btn i').className = 'fas fa-pause';
+            
+            // เริ่มอัพเดท progress bar
+            updateProgressBar();
+        }
+
+        // เมื่อสถานะ Player เปลี่ยน
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                if (isRepeat) {
+                    event.target.playVideo();
+                } else {
+                    playNextSong();
+                }
+            } else if (event.data == YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                document.querySelector('.play-pause-btn i').className = 'fas fa-play';
+                clearInterval(progressInterval);
+            } else if (event.data == YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.querySelector('.play-pause-btn i').className = 'fas fa-pause';
+                updateProgressBar();
+            }
+        }
+
+        // อัพเดท progress bar
+        function updateProgressBar() {
+            clearInterval(progressInterval);
+            
+            progressInterval = setInterval(() => {
+                if (player && player.getCurrentTime && player.getDuration) {
+                    const currentTime = player.getCurrentTime();
+                    const duration = player.getDuration();
+                    const progress = (currentTime / duration) * 100;
+                    
+                    document.querySelector('.progress-bar').style.width = `${progress}%`;
+                    document.querySelector('.current-time').textContent = formatTime(currentTime);
+                    document.querySelector('.duration').textContent = formatTime(duration);
+                }
+            }, 1000);
+        }
+
+        // เล่นเพลงถัดไป
+        function playNextSong() {
+            if (currentSongIndex === -1 || currentPlaylist.length === 0) return;
+            
+            let nextIndex;
+            if (isShuffle) {
+                // สุ่มเพลงถัดไป
+                nextIndex = Math.floor(Math.random() * currentPlaylist.length);
+            } else {
+                // เล่นตามลำดับ
+                nextIndex = (currentSongIndex + 1) % currentPlaylist.length;
+            }
+            
+            playSong(currentPlaylist[nextIndex]);
+        }
+
+        // เล่นเพลงก่อนหน้า
+        function playPrevSong() {
+            if (currentSongIndex === -1 || currentPlaylist.length === 0) return;
+            
+            let prevIndex;
+            if (isShuffle) {
+                // สุ่มเพลงก่อนหน้า
+                prevIndex = Math.floor(Math.random() * currentPlaylist.length);
+            } else {
+                // เล่นตามลำดับ
+                prevIndex = (currentSongIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            }
+            
+            playSong(currentPlaylist[prevIndex]);
+        }
+
+        // ฟังก์ชันแสดงการแจ้งเตือน
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white px-4 py-2 rounded-md shadow-lg text-sm animate-fade-in-out';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // ลบ notification หลังจาก 2 วินาที
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        }
+
+        // เพิ่ม event listeners ให้ปุ่มเล่นทั้งหมด
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const songId = this.getAttribute('data-song');
+                playSong(songId);
+            });
+        });
+
+        // เล่นเพลย์ลิสต์ทั้งหมด
+        document.querySelector('.play-playlist').addEventListener('click', function() {
+            if (songIds.length > 0) {
+                playSong(songIds[0]);
+            }
+        });
+
+        // ควบคุม Now Playing Bar
+        document.querySelector('.play-pause-btn').addEventListener('click', function() {
+            if (player) {
+                if (isPlaying) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo();
+                }
+            }
+        });
+
+        document.querySelector('.prev-btn').addEventListener('click', playPrevSong);
+        document.querySelector('.next-btn').addEventListener('click', playNextSong);
+
+        document.querySelector('.shuffle-btn').addEventListener('click', function() {
+            isShuffle = !isShuffle;
+            this.classList.toggle('text-pink-500');
+            this.classList.toggle('text-gray-300');
+            
+            if (isShuffle) {
+                shufflePlaylist();
+                showNotification('โหมดสุ่มเพลงถูกเปิดใช้งาน');
+            } else {
+                currentPlaylist = [...songIds];
+                showNotification('โหมดสุ่มเพลงถูกปิดใช้งาน');
+            }
+        });
+
+        document.querySelector('.repeat-btn').addEventListener('click', function() {
+            isRepeat = !isRepeat;
+            this.classList.toggle('text-pink-500');
+            this.classList.toggle('text-gray-300');
+            showNotification(isRepeat ? 'โหมดเล่นซ้ำถูกเปิดใช้งาน' : 'โหมดเล่นซ้ำถูกปิดใช้งาน');
+        });
+
+        // คลิก progress bar เพื่อข้ามไปยังตำแหน่งต่างๆ
+        document.querySelector('.progress-container').addEventListener('click', function(e) {
+            if (!player || !currentSong) return;
+            
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const percent = clickX / width;
+            
+            if (player.getDuration) {
+                const duration = player.getDuration();
+                player.seekTo(duration * percent, true);
+            }
+        });
+
+        // ควบคุมระดับเสียง
+        document.querySelector('.volume-container').addEventListener('click', function(e) {
+            const volumeSlider = this.querySelector('.volume-slider');
+            const volumeIcon = this.querySelector('.volume-icon');
+            
+            if (e.target.closest('.volume-icon')) {
+                // สลับระหว่างปิด/เปิดเสียง
+                if (volume > 0) {
+                    volume = 0;
+                    if (player) player.setVolume(0);
+                    volumeIcon.className = 'fas fa-volume-mute volume-icon text-gray-400 mr-2';
+                    document.querySelector('.volume-progress').style.width = '0%';
+                } else {
+                    volume = 0.7;
+                    if (player) player.setVolume(70);
+                    updateVolumeIcon(volumeIcon, volume);
+                    document.querySelector('.volume-progress').style.width = '70%';
+                }
+            } else if (e.target.closest('.volume-slider')) {
+                // เปลี่ยนระดับเสียง
+                const width = volumeSlider.clientWidth;
+                const clickX = e.offsetX;
+                volume = Math.min(1, Math.max(0, clickX / width));
+                if (player) player.setVolume(volume * 100);
+                document.querySelector('.volume-progress').style.width = `${volume * 100}%`;
+                updateVolumeIcon(volumeIcon, volume);
+            }
+        });
+
+        // อัพเดทไอคอนระดับเสียง
+        function updateVolumeIcon(icon, vol) {
+            if (vol === 0) {
+                icon.className = 'fas fa-volume-mute volume-icon text-gray-400 mr-2';
+            } else if (vol < 0.5) {
+                icon.className = 'fas fa-volume-down volume-icon text-gray-400 mr-2';
+            } else {
+                icon.className = 'fas fa-volume-up volume-icon text-gray-400 mr-2';
+            }
+        }
+
+        // รูปแบบเวลา
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // เริ่มต้นตั้งค่าระดับเสียง
+        document.querySelector('.volume-progress').style.width = `${volume * 100}%`;
+    });
+    </script>
+</body>
+</html>
